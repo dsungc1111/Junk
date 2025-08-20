@@ -1,0 +1,8 @@
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "npm run build && npm start"
+
+[build.nixpacks]
+aptPackages = ["ffmpeg"]

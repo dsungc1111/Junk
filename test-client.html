@@ -390,7 +390,7 @@
     </div>
 
     <script>
-        const SERVER_URL = 'http://localhost:3000';
+        const SERVER_URL = window.location.origin;
         let ws = null;
 
         function switchTab(tabName) {
@@ -408,7 +408,8 @@
         }
 
         function connectWebSocket() {
-            ws = new WebSocket('ws://localhost:3000');
+            const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            ws = new WebSocket(`${wsProtocol}//${window.location.host}`);
             
             ws.onopen = () => {
                 console.log('WebSocket connected');
