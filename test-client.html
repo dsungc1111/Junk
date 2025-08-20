@@ -3,20 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-6927948621643869">
     <title>FFmpeg Media Server</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6927948621643869"
+         crossorigin="anonymous"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+            margin: 0;
             padding: 20px;
             background: #f5f5f5;
         }
+        .main-wrapper {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+        .sidebar-ad {
+            width: 300px;
+            min-height: 600px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+        }
         .container {
+            flex: 1;
+            max-width: 800px;
             background: white;
             border-radius: 10px;
             padding: 30px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 1200px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+            .sidebar-ad {
+                width: 100%;
+                min-height: 250px;
+                position: relative;
+                top: auto;
+            }
         }
         h1 {
             color: #333;
@@ -150,7 +182,24 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="main-wrapper">
+        <!-- 왼쪽 광고 영역 -->
+        <div class="sidebar-ad">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6927948621643869"
+                 crossorigin="anonymous"></script>
+            <!-- ads -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6927948621643869"
+                 data-ad-slot="4240876108"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <div class="container">
         <h1>🎬 FFmpeg Media Server</h1>
         
         <div class="tab-buttons">
@@ -251,6 +300,21 @@
         </div>
 
         <div id="result"></div>
+        </div>
+        
+        <!-- 오른쪽 광고 영역 -->
+        <div class="sidebar-ad">
+            <!-- ads -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6927948621643869"
+                 data-ad-slot="4240876108"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 
     <script>
