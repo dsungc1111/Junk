@@ -39,6 +39,10 @@ app.use(express.json());
 app.use('/outputs', express.static(OUTPUT_DIR));
 app.use(express.static('.'));
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'test-client.html'));
+});
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
