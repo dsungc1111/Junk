@@ -167,12 +167,12 @@ wss.on('connection', (ws) => {
   ws.send(JSON.stringify({ type: 'connected', message: 'Connected to FFmpeg server' }));
 });
 
-server.listen(PORT, () => {
-  console.log(`FFmpeg Media Server running on http://localhost:${PORT}`);
+server.listen(Number(PORT), '0.0.0.0', () => {
+  console.log(`FFmpeg Media Server running on http://0.0.0.0:${PORT}`);
   console.log('Available endpoints:');
   console.log('  GET / - Web client interface');
   console.log('  GET /health - Health check');
   console.log('  POST /convert/video - Convert video format');
   console.log('  POST /extract/audio - Extract audio from video');
-  console.log(`  WebSocket support on ws://localhost:${PORT}`);
+  console.log(`  WebSocket support on ws://0.0.0.0:${PORT}`);
 });
