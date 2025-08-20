@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FFmpeg Media Server Test</title>
+    <title>FFmpeg Media Server</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -111,7 +111,7 @@
             text-decoration: none;
             font-weight: 600;
         }
-        #result video {
+        #result video, #result audio {
             width: 100%;
             margin-top: 10px;
             border-radius: 6px;
@@ -151,16 +151,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎬 FFmpeg Media Server Test</h1>
+        <h1>🎬 FFmpeg Media Server</h1>
         
         <div class="tab-buttons">
             <button class="tab-button active" onclick="switchTab('convert')">비디오 변환</button>
-            <button class="tab-button" onclick="switchTab('multi')">다중 변환</button>
             <button class="tab-button" onclick="switchTab('audio')">오디오 추출</button>
-            <button class="tab-button" onclick="switchTab('gif')">GIF 변환</button>
-            <button class="tab-button" onclick="switchTab('thumbnail')">썸네일 생성</button>
-            <button class="tab-button" onclick="switchTab('trim')">비디오 자르기</button>
-            <button class="tab-button" onclick="switchTab('metadata')">메타데이터</button>
         </div>
 
         <!-- 비디오 변환 탭 -->
@@ -222,32 +217,6 @@
             <button onclick="convertVideo()">비디오 변환</button>
         </div>
 
-        <!-- 다중 변환 탭 -->
-        <div id="multi-tab" class="tab-content">
-            <div class="upload-section">
-                <label for="multi-video-file">비디오 파일 선택:</label>
-                <input type="file" id="multi-video-file" accept="video/*">
-            </div>
-
-            <div style="margin: 20px 0;">
-                <h3>✨ 한 번에 여러 형식으로 변환</h3>
-                <p style="color: #666; margin: 10px 0;">
-                    144p, 360p, 720p MP4 파일과 GIF를 동시에 생성합니다.
-                </p>
-                <div style="background: #f0f8ff; padding: 15px; border-radius: 6px; margin: 15px 0;">
-                    <strong>생성될 파일들:</strong>
-                    <ul style="margin: 10px 0;">
-                        <li>144p MP4 (256x144, 200kbps)</li>
-                        <li>360p MP4 (640x360, 800kbps)</li>
-                        <li>720p MP4 (1280x720, 2500kbps)</li>
-                        <li>GIF (320px 너비, 10fps, 최대 10초)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <button onclick="convertMultiple()">🚀 다중 변환 시작</button>
-        </div>
-
         <!-- 오디오 추출 탭 -->
         <div id="audio-tab" class="tab-content">
             <div class="upload-section">
@@ -268,115 +237,6 @@
             </div>
 
             <button onclick="extractAudio()">오디오 추출</button>
-        </div>
-
-        <!-- GIF 변환 탭 -->
-        <div id="gif-tab" class="tab-content">
-            <h3>MP4 → GIF 변환</h3>
-            <div class="upload-section">
-                <label for="gif-video-file">비디오 파일 선택:</label>
-                <input type="file" id="gif-video-file" accept="video/*">
-            </div>
-
-            <div class="options">
-                <div class="option-group">
-                    <label for="gif-fps">FPS (프레임/초):</label>
-                    <input type="number" id="gif-fps" value="10" min="1" max="30">
-                </div>
-                <div class="option-group">
-                    <label for="gif-scale">너비 (픽셀):</label>
-                    <input type="number" id="gif-scale" value="320" min="100" max="1920">
-                </div>
-                <div class="option-group">
-                    <label for="gif-duration">최대 길이 (초):</label>
-                    <input type="number" id="gif-duration" value="10" min="1" max="60">
-                </div>
-            </div>
-
-            <button onclick="convertToGif()">GIF로 변환</button>
-
-            <hr style="margin: 30px 0;">
-
-            <h3>GIF → MP4 다중 변환</h3>
-            <div class="upload-section">
-                <label for="gif-to-mp4-file">GIF 파일 선택:</label>
-                <input type="file" id="gif-to-mp4-file" accept="image/gif">
-            </div>
-
-            <div style="margin: 20px 0;">
-                <p style="color: #666;">한 번에 여러 해상도로 변환됩니다:</p>
-                <div style="background: #f0f8ff; padding: 15px; border-radius: 6px; margin: 15px 0;">
-                    <strong>생성될 파일들:</strong>
-                    <ul style="margin: 10px 0;">
-                        <li>144p MP4 (256x144, 200kbps)</li>
-                        <li>360p MP4 (640x360, 800kbps)</li>
-                        <li>480p MP4 (854x480, 1500kbps)</li>
-                        <li>720p MP4 (1280x720, 2500kbps)</li>
-                        <li>원본 GIF 파일 유지</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="options">
-                <div class="option-group">
-                    <label for="gif-mp4-fps">FPS (프레임/초):</label>
-                    <input type="number" id="gif-mp4-fps" value="25" min="1" max="60">
-                </div>
-            </div>
-
-            <button onclick="convertFromGif()">MP4로 다중 변환</button>
-        </div>
-
-        <!-- 썸네일 생성 탭 -->
-        <div id="thumbnail-tab" class="tab-content">
-            <div class="upload-section">
-                <label for="thumb-video-file">비디오 파일 선택:</label>
-                <input type="file" id="thumb-video-file" accept="video/*">
-            </div>
-
-            <div class="options">
-                <div class="option-group">
-                    <label for="thumb-size">썸네일 크기:</label>
-                    <input type="text" id="thumb-size" value="640x480">
-                </div>
-                <div class="option-group">
-                    <label for="timestamps">타임스탬프 (쉼표로 구분):</label>
-                    <input type="text" id="timestamps" placeholder="25%, 50%, 75%">
-                </div>
-            </div>
-
-            <button onclick="generateThumbnail()">썸네일 생성</button>
-        </div>
-
-        <!-- 비디오 자르기 탭 -->
-        <div id="trim-tab" class="tab-content">
-            <div class="upload-section">
-                <label for="trim-video-file">비디오 파일 선택:</label>
-                <input type="file" id="trim-video-file" accept="video/*">
-            </div>
-
-            <div class="options">
-                <div class="option-group">
-                    <label for="start-time">시작 시간 (예: 00:00:10):</label>
-                    <input type="text" id="start-time" placeholder="00:00:10">
-                </div>
-                <div class="option-group">
-                    <label for="duration">길이 (예: 00:00:30):</label>
-                    <input type="text" id="duration" placeholder="00:00:30">
-                </div>
-            </div>
-
-            <button onclick="trimVideo()">비디오 자르기</button>
-        </div>
-
-        <!-- 메타데이터 탭 -->
-        <div id="metadata-tab" class="tab-content">
-            <div class="upload-section">
-                <label for="meta-video-file">비디오 파일 선택:</label>
-                <input type="file" id="meta-video-file" accept="video/*">
-            </div>
-
-            <button onclick="getMetadata()">메타데이터 추출</button>
         </div>
 
         <div id="progress">
@@ -490,6 +350,7 @@
                     showResult(`
                         <h3>✅ 변환 완료!</h3>
                         <p>다운로드: <a href="${SERVER_URL}${result.outputUrl}" download>변환된 파일 다운로드</a></p>
+                        <p>변환 시간: ${result.metadata.conversionTime.toFixed(1)}초</p>
                         <video controls src="${SERVER_URL}${result.outputUrl}"></video>
                     `);
                 } else {
@@ -531,348 +392,6 @@
                     `);
                 } else {
                     showResult(`<h3>❌ 추출 실패</h3><p>${result.error}</p>`, true);
-                }
-            } catch (error) {
-                showResult(`<h3>❌ 오류 발생</h3><p>${error.message}</p>`, true);
-            }
-        }
-
-        async function generateThumbnail() {
-            const fileInput = document.getElementById('thumb-video-file');
-            const file = fileInput.files[0];
-            
-            if (!file) {
-                alert('비디오 파일을 선택해주세요.');
-                return;
-            }
-
-            showProgress();
-
-            const formData = new FormData();
-            formData.append('video', file);
-            formData.append('size', document.getElementById('thumb-size').value);
-            
-            const timestamps = document.getElementById('timestamps').value;
-            if (timestamps) formData.append('timestamps', timestamps);
-
-            try {
-                const response = await fetch(`${SERVER_URL}/thumbnail`, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    showResult(`
-                        <h3>✅ 썸네일 생성 완료!</h3>
-                        <p>다운로드: <a href="${SERVER_URL}${result.thumbnailUrl}" download>썸네일 다운로드</a></p>
-                        <img src="${SERVER_URL}${result.thumbnailUrl}" style="max-width: 100%; margin-top: 10px;">
-                    `);
-                } else {
-                    showResult(`<h3>❌ 생성 실패</h3><p>${result.error}</p>`, true);
-                }
-            } catch (error) {
-                showResult(`<h3>❌ 오류 발생</h3><p>${error.message}</p>`, true);
-            }
-        }
-
-        async function trimVideo() {
-            const fileInput = document.getElementById('trim-video-file');
-            const file = fileInput.files[0];
-            const startTime = document.getElementById('start-time').value;
-            const duration = document.getElementById('duration').value;
-            
-            if (!file) {
-                alert('비디오 파일을 선택해주세요.');
-                return;
-            }
-            
-            if (!startTime || !duration) {
-                alert('시작 시간과 길이를 입력해주세요.');
-                return;
-            }
-
-            showProgress();
-
-            const formData = new FormData();
-            formData.append('video', file);
-            formData.append('startTime', startTime);
-            formData.append('duration', duration);
-
-            try {
-                const response = await fetch(`${SERVER_URL}/trim`, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    showResult(`
-                        <h3>✅ 비디오 자르기 완료!</h3>
-                        <p>다운로드: <a href="${SERVER_URL}${result.outputUrl}" download>잘라낸 비디오 다운로드</a></p>
-                        <video controls src="${SERVER_URL}${result.outputUrl}"></video>
-                    `);
-                } else {
-                    showResult(`<h3>❌ 자르기 실패</h3><p>${result.error}</p>`, true);
-                }
-            } catch (error) {
-                showResult(`<h3>❌ 오류 발생</h3><p>${error.message}</p>`, true);
-            }
-        }
-
-        async function convertToGif() {
-            const fileInput = document.getElementById('gif-video-file');
-            const file = fileInput.files[0];
-            
-            if (!file) {
-                alert('비디오 파일을 선택해주세요.');
-                return;
-            }
-
-            connectWebSocket();
-            showProgress();
-
-            const formData = new FormData();
-            formData.append('video', file);
-            formData.append('fps', document.getElementById('gif-fps').value);
-            formData.append('scale', document.getElementById('gif-scale').value);
-            formData.append('duration', document.getElementById('gif-duration').value);
-
-            try {
-                const response = await fetch(`${SERVER_URL}/convert/to-gif`, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    showResult(`
-                        <h3>✅ GIF 변환 완료!</h3>
-                        <p>다운로드: <a href="${SERVER_URL}${result.outputUrl}" download>GIF 파일 다운로드</a></p>
-                        <p>파일 크기: ${(result.metadata.size / 1024 / 1024).toFixed(2)} MB</p>
-                        <p>설정: ${result.metadata.fps} FPS, ${result.metadata.scale}px 너비</p>
-                        <p>변환 시간: ${result.metadata.conversionTime.toFixed(1)}초</p>
-                        <img src="${SERVER_URL}${result.outputUrl}" style="max-width: 100%; margin-top: 10px;">
-                    `);
-                } else {
-                    showResult(`<h3>❌ GIF 변환 실패</h3><p>${result.error}</p>`, true);
-                }
-            } catch (error) {
-                showResult(`<h3>❌ 오류 발생</h3><p>${error.message}</p>`, true);
-            }
-        }
-
-        async function convertMultiple() {
-            const fileInput = document.getElementById('multi-video-file');
-            const file = fileInput.files[0];
-            
-            if (!file) {
-                alert('비디오 파일을 선택해주세요.');
-                return;
-            }
-
-            connectWebSocket();
-            showProgress();
-
-            try {
-                const formData = new FormData();
-                formData.append('video', file);
-                formData.append('includeGif', 'true'); // GIF 변환 포함
-
-                const response = await fetch(`${SERVER_URL}/convert/multi-resolution`, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    let resultHtml = `
-                        <h3>✅ 다중 변환 완료!</h3>
-                        <p>총 변환 시간: ${result.totalConversionTime.toFixed(1)}초</p>
-                        <h4>📁 생성된 파일들:</h4>
-                        <ul>`;
-                    
-                    result.results.forEach(res => {
-                        if (res.resolution === 'GIF') {
-                            resultHtml += `
-                                <li>
-                                    <strong>🎬 GIF:</strong> 
-                                    <a href="${SERVER_URL}${res.outputUrl}" download>GIF 다운로드</a>
-                                    (${(res.fileSize / 1024 / 1024).toFixed(2)} MB)
-                                </li>`;
-                        } else {
-                            resultHtml += `
-                                <li>
-                                    <strong>📹 ${res.resolution}:</strong> 
-                                    <a href="${SERVER_URL}${res.outputUrl}" download>${res.resolution} 다운로드</a>
-                                    (${(res.fileSize / 1024 / 1024).toFixed(2)} MB)
-                                </li>`;
-                        }
-                    });
-                    
-                    resultHtml += `</ul>`;
-                    
-                    // 비디오와 GIF 미리보기 표시
-                    resultHtml += `<h4>미리보기:</h4>`;
-                    
-                    // MP4 비디오들 표시
-                    result.results.forEach(res => {
-                        if (res.resolution !== 'GIF') {
-                            resultHtml += `
-                                <div style="margin: 20px 0;">
-                                    <h5>${res.resolution} 비디오 (${(res.fileSize / 1024 / 1024).toFixed(2)} MB):</h5>
-                                    <video controls src="${SERVER_URL}${res.outputUrl}" style="max-width: 100%; margin-top: 10px;"></video>
-                                </div>`;
-                        }
-                    });
-                    
-                    // GIF 미리보기 표시
-                    const gifResult = result.results.find(r => r.resolution === 'GIF');
-                    if (gifResult) {
-                        resultHtml += `
-                            <div style="margin: 20px 0;">
-                                <h5>GIF 미리보기 (${(gifResult.fileSize / 1024 / 1024).toFixed(2)} MB):</h5>
-                                <img src="${SERVER_URL}${gifResult.outputUrl}" style="max-width: 320px; margin-top: 10px;">
-                            </div>
-                        `;
-                    }
-                    
-                    showResult(resultHtml);
-                } else {
-                    showResult(`<h3>❌ 변환 실패</h3><p>${result.error}</p>`, true);
-                }
-            } catch (error) {
-                showResult(`<h3>❌ 오류 발생</h3><p>${error.message}</p>`, true);
-            }
-        }
-
-        async function convertFromGif() {
-            const fileInput = document.getElementById('gif-to-mp4-file');
-            const file = fileInput.files[0];
-            
-            if (!file) {
-                alert('GIF 파일을 선택해주세요.');
-                return;
-            }
-
-            connectWebSocket();
-            showProgress();
-
-            const formData = new FormData();
-            formData.append('gif', file);
-            formData.append('fps', document.getElementById('gif-mp4-fps').value);
-
-            try {
-                const response = await fetch(`${SERVER_URL}/convert/from-gif`, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    let resultHtml = `
-                        <h3>✅ GIF → MP4 다중 변환 완료!</h3>
-                        <p>총 변환 시간: ${result.totalConversionTime.toFixed(1)}초</p>
-                        <h4>📁 생성된 파일들:</h4>
-                        <ul>`;
-                    
-                    result.results.forEach(res => {
-                        if (res.resolution === 'GIF') {
-                            resultHtml += `
-                                <li>
-                                    <strong>🎬 원본 GIF:</strong> 
-                                    <a href="${SERVER_URL}${res.outputUrl}" download>GIF 다운로드</a>
-                                    (${(res.fileSize / 1024 / 1024).toFixed(2)} MB)
-                                </li>`;
-                        } else {
-                            resultHtml += `
-                                <li>
-                                    <strong>📹 ${res.resolution}:</strong> 
-                                    <a href="${SERVER_URL}${res.outputUrl}" download>${res.resolution} 다운로드</a>
-                                    (${(res.fileSize / 1024 / 1024).toFixed(2)} MB)
-                                </li>`;
-                        }
-                    });
-                    
-                    resultHtml += `</ul>`;
-                    
-                    // 비디오와 GIF 미리보기 표시
-                    resultHtml += `<h4>미리보기:</h4>`;
-                    
-                    // 원본 GIF 표시
-                    const gifResult = result.results.find(r => r.resolution === 'GIF');
-                    if (gifResult) {
-                        resultHtml += `
-                            <div style="margin: 20px 0;">
-                                <h5>원본 GIF (${(gifResult.fileSize / 1024 / 1024).toFixed(2)} MB):</h5>
-                                <img src="${SERVER_URL}${gifResult.outputUrl}" style="max-width: 100%; max-height: 400px; margin-top: 10px;">
-                            </div>
-                        `;
-                    }
-                    
-                    // MP4 비디오들 표시
-                    result.results.forEach(res => {
-                        if (res.resolution !== 'GIF') {
-                            resultHtml += `
-                                <div style="margin: 20px 0;">
-                                    <h5>${res.resolution} 비디오 (${(res.fileSize / 1024 / 1024).toFixed(2)} MB):</h5>
-                                    <video controls src="${SERVER_URL}${res.outputUrl}" style="max-width: 100%; margin-top: 10px;"></video>
-                                </div>`;
-                        }
-                    });
-                    
-                    showResult(resultHtml);
-                } else {
-                    showResult(`<h3>❌ MP4 변환 실패</h3><p>${result.error}</p>`, true);
-                }
-            } catch (error) {
-                showResult(`<h3>❌ 오류 발생</h3><p>${error.message}</p>`, true);
-            }
-        }
-
-        async function getMetadata() {
-            const fileInput = document.getElementById('meta-video-file');
-            const file = fileInput.files[0];
-            
-            if (!file) {
-                alert('비디오 파일을 선택해주세요.');
-                return;
-            }
-
-            showProgress();
-
-            const formData = new FormData();
-            formData.append('video', file);
-
-            try {
-                const response = await fetch(`${SERVER_URL}/metadata`, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    const metadata = result.metadata;
-                    showResult(`
-                        <h3>📊 메타데이터</h3>
-                        <h4>파일 정보:</h4>
-                        <ul>
-                            <li>형식: ${metadata.format.format_name}</li>
-                            <li>길이: ${Math.round(metadata.format.duration)} 초</li>
-                            <li>크기: ${(metadata.format.size / 1024 / 1024).toFixed(2)} MB</li>
-                            <li>비트레이트: ${(metadata.format.bit_rate / 1000).toFixed(0)} kbps</li>
-                        </ul>
-                        <h4>스트림 정보:</h4>
-                        <pre>${JSON.stringify(metadata.streams, null, 2)}</pre>
-                    `);
-                } else {
-                    showResult(`<h3>❌ 메타데이터 추출 실패</h3><p>${result.error}</p>`, true);
                 }
             } catch (error) {
                 showResult(`<h3>❌ 오류 발생</h3><p>${error.message}</p>`, true);
