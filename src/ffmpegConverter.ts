@@ -65,16 +65,16 @@ export class FFmpegConverter extends EventEmitter {
           
           switch (scale) {
             case '1080':
-              scaleFilter = "scale='min(1920,iw)':'min(1080,ih)':force_original_aspect_ratio=decrease";
+              scaleFilter = "scale=-2:1080";
               break;
             case '720':
-              scaleFilter = "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease";
+              scaleFilter = "scale=-2:720";
               break;
             case '480':
-              scaleFilter = "scale='min(854,iw)':'min(480,ih)':force_original_aspect_ratio=decrease";
+              scaleFilter = "scale=-2:480";
               break;
             case '360':
-              scaleFilter = "scale='min(640,iw)':'min(360,ih)':force_original_aspect_ratio=decrease";
+              scaleFilter = "scale=-2:360";
               break;
           }
           
