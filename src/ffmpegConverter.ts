@@ -58,7 +58,33 @@ export class FFmpegConverter extends EventEmitter {
       }
 
       if (options.resolution) {
-        command = command.size(options.resolution);
+        if (options.resolution.startsWith('scale_')) {
+          // 비율 유지 해상도 처리
+          const scale = options.resolution.replace('scale_', '');
+          let scaleFilter = '';
+          
+          switch (scale) {
+            case '1080':
+              scaleFilter = "scale='min(1920,iw)':'min(1080,ih)':force_original_aspect_ratio=decrease";
+              break;
+            case '720':
+              scaleFilter = "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease";
+              break;
+            case '480':
+              scaleFilter = "scale='min(854,iw)':'min(480,ih)':force_original_aspect_ratio=decrease";
+              break;
+            case '360':
+              scaleFilter = "scale='min(640,iw)':'min(360,ih)':force_original_aspect_ratio=decrease";
+              break;
+          }
+          
+          if (scaleFilter) {
+            command = command.videoFilters(scaleFilter);
+          }
+        } else {
+          // 고정 해상도 처리
+          command = command.size(options.resolution);
+        }
       }
 
       if (options.preset) {
